@@ -1,0 +1,301 @@
+/* ---------- 0. Font(s) ---------- */
+/* Loads your own font file and gives it a name */
+@font-face {
+  font-family: 'WonderType';               /* the name you'll use below */
+  src: url('Fonts/WonderType-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FatAlbertBTShadow-Regular';   /* the nickname you'll use below */
+  src: url('Fonts/FatAlbertBTShadow-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ---------- 1. SPACING VARIABLES ---------- */
+:root {
+  --page-padding: 24px;   /* space between screen edge and content */
+  --gap: 24px;            /* space between nav items and between cards */
+  --bg-color: #ffffff;    /* background color, change freely */
+  --card-color: rgba(255, 255, 255, 0.4);   /* white at 60% opacity; lower = more see-through */
+}
+/* ---------- 2. RESET ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;   /* smooth scrolling when clicking nav links */
+}
+
+/* ---------- 3. PAGE LAYOUT ---------- */
+body {
+  font-family: 'WonderType', sans-serif;
+  font-size: 14px;
+  min-height: 100vh;         /* page is at least as tall as the screen */
+  display: flex;
+  flex-direction: column;    /* stacks header, main, footer vertically */
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+/* ---------- 4. NAVIGATION ---------- */
+.nav {
+  display: flex;                 /* puts everything in one row */
+  align-items: center;           /* vertically centers the items */
+  gap: 60px;               /* space between links */
+  padding: var(--page-padding);
+  font-family: 'FatAlbertBTShadow-Regular', sans-serif;
+  font-size: 38px;    /* new: only the header uses this font */
+}
+
+.nav-logo {
+  margin-right: auto;            /* pushes everything else away: logo stays far left */
+  font-weight: bold;
+}
+
+.nav-about {
+  margin-left: auto;             /* pushes About Me to the far right */
+}
+
+/* ---------- INTRO NOTE (drawings explanation) ---------- */
+.intro-note {
+  margin-top: 12px;    /* space between the one-liner and the note */
+  font-size: 12px;     /* smaller than the main sentence, like a caption */
+  line-height: 1.4;
+  background: var(--card-color);
+  backdrop-filter: blur(6px);
+  padding: var(--page-padding);
+}
+
+/* ---------- INTRO TEXT ---------- */
+.intro {
+  max-width: 600px;              /* keeps the text block narrow and readable */
+  margin: 0 auto var(--gap);     /* auto left/right centers the block, bottom keeps the gap */
+  text-align: center;            /* centers the text lines inside the block */
+
+  background: #ffffff;               /* solid white, no transparency */
+  box-shadow: 0 0 24px 16px #ffffff;   /* white glow that fades out around the edges */
+  /* padding: var(--page-padding);      space between the text and the white box edge */
+
+  /* background: var(--card-color);
+  backdrop-filter: blur(6px);
+  padding: var(--page-padding); */
+}
+
+
+/* ---------- 5. BACKGROUND ---------- */
+.background {
+  flex: 1;
+  padding: var(--page-padding);
+  /* background line removed: the color now lives on .drawings */
+}
+
+/* ---------- 6. SECTIONS (CARD GRID) ---------- */
+.sections {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);   /* three equal columns */
+  gap: var(--gap);
+}
+
+.card {
+  background: var(--card-color);
+  backdrop-filter: blur(1px);
+  padding: var(--page-padding);
+  min-height: 300px;
+  font-size: 16px;
+
+  display: flex;                 /* lets us control how the content is positioned */
+  flex-direction: column;        /* stacks the gallery and title vertically */
+  justify-content: center;       /* centers the content vertically if there is spare height */
+  align-items: center;           /* centers the content horizontally */
+  text-align: center;            /* centers the title text itself */
+
+  /*backdrop-filter: blur(6px);   /* blurs whatever is behind the card */
+}
+
+
+.card-link {
+  min-height: 0;             /* cancels the 300px, card fits its text */
+  padding: 20px 24px;        /* smaller space around the title */
+}
+
+/* ---------- 7. FOOTER ---------- */
+.footer {
+  padding: var(--page-padding);
+  text-align:center;
+}
+
+/* ---------- 8. RESPONSIVE ---------- */
+@media (max-width: 800px) {
+  .sections {
+    grid-template-columns: 1fr;  /* cards stack on small screens */
+  }
+
+  .nav {
+    flex-wrap: wrap;             /* nav links wrap onto a second line if needed */
+  }
+}
+
+/* Makes the landing page cards (now links) behave like boxes */
+.card {
+  display: block;   /* links are inline by default; block lets them fill the grid cell */
+}
+
+
+
+/* ---------- GALLERY ---------- */
+.gallery {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--ratio, 4 / 3);   /* each gallery can override this; 4 / 3 is the default */
+  background: var(--bg-color);
+}
+
+.gallery-track {
+  position: absolute;
+  inset: 0;                      /* stretches the track to exactly fill the window */
+  display: flex;
+  transition: transform 0.8s ease-in-out;
+}
+
+.gallery-track img {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;                   /* fills the frame, crops slightly where shapes differ */
+}
+
+
+.gallery + h2 {
+  margin-top: 12px;          /* space between the gallery and the project title */
+}
+
+
+/* ---------- LOGO ---------- */
+
+.nav-logo img {
+  height: 100px;      /* the logo's height; width adjusts automatically */
+  width: auto;       /* keeps the original proportions */
+  display: block;    /* removes the small gap browsers add under inline images */
+}
+
+
+
+
+/* ---------- PROJECT DETAIL PAGE ---------- */
+.project {
+  max-width: 800px;              /* readable column width */
+  margin: 0 auto;                /* centers the column on the page */
+}
+
+.project h1 {
+  font-size: 24px;
+  font-weight: normal;           /* your font only has Regular, so no fake bold */
+  margin-bottom: 8px;
+}
+
+.project-info {
+  margin-bottom: var(--gap);     /* space between info line and the description */
+}
+
+.project-text {
+  margin-bottom: var(--gap);
+}
+
+.project-text p {
+  margin-bottom: 1em;            /* space between paragraphs */
+  line-height: 1.5;              /* more breathing room for reading */
+}
+
+.project-images img {
+  display: block;                /* removes the small gap under inline images */
+  width: 100%;                   /* fills the column width */
+  height: auto;                  /* keeps the original proportions, nothing cropped */
+  margin-bottom: var(--gap);     /* space between pictures */
+}
+
+
+/* ---------- PICTURE CAPTIONS ---------- */
+
+
+.project-images figcaption {
+  margin-top: 8px;               /* space between picture and caption */
+  font-size: 12px;               /* smaller than the body text */
+  line-height: 1.4;
+  margin-bottom: var(--gap);     /* space between caption and next picture */
+}
+
+/* ---------- PROJECT VIDEO ---------- */
+.project-video {
+  margin-bottom: var(--gap);     /* space after the video, same as the pictures */
+}
+
+.project-video iframe {
+  display: block;
+  width: 100%;                   /* fills the column width */
+  aspect-ratio: 16 / 9;          /* keeps the standard video shape at any width */
+  border: 0;                     /* removes the default iframe border */
+}
+
+.project-video video {
+  display: block;
+  width: 100%;
+  height: auto;                  /* keeps the original proportions */
+}
+
+.project-video figcaption {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+
+/* ---------- MOVING BACKGROUND ---------- */
+.drawings {
+  position: fixed;               /* stays on screen while the page scrolls */
+  inset: 0;                      /* covers the whole window */
+  z-index: -1;                   /* sits behind all content */
+  overflow: hidden;              /* drawings drifting off the edge don't cause scrollbars */
+  background: var(--bg-color);   /* the page color now lives here (see below) */
+  pointer-events: none;          /* clicks pass straight through */
+}
+
+.drawing {
+  position: absolute;
+  width: clamp(70px, 10vw, 140px);   /* was clamp(160px, 22vw, 320px) */
+  height: auto;
+  mix-blend-mode: multiply;           /* white paper disappears, black marker stays */
+  animation: drift 60s ease-in-out infinite alternate;
+}
+
+/* Slow drift: move a little, rotate a little, then come back */
+@keyframes drift {
+  from { transform: translate(0, 0) rotate(0deg); }
+  to   { transform: translate(var(--dx), var(--dy)) rotate(var(--dr, 3deg)); }
+}
+
+/* Each drawing gets its own position, direction, and speed so they never move in sync */
+/* .drawing:nth-child(1) { top: 4%;  left: 4%;  --dx: 90px;  --dy: -70px; --dr: 8deg;  animation-duration: 10s; animation-delay: -4s; }
+.drawing:nth-child(2) { top: 8%;  left: 72%; --dx: -100px; --dy: 80px;  --dr: -9deg; animation-duration: 14s; animation-delay: -7s; }
+.drawing:nth-child(3) { top: 38%; left: 44%; --dx: 80px;  --dy: 100px; --dr: 7deg;  animation-duration: 12s; animation-delay: -9s; }
+.drawing:nth-child(4) { top: 55%; left: 8%;  --dx: -90px; --dy: -100px; --dr: -8deg; animation-duration: 16s; animation-delay: -11s; }
+.drawing:nth-child(5) { top: 60%; left: 78%; --dx: 100px; --dy: -80px; --dr: 9deg;  animation-duration: 11s; animation-delay: -2s; }
+.drawing:nth-child(6) { top: 80%; left: 40%; --dx: -80px; --dy: -70px; --dr: -7deg; animation-duration: 13s; animation-delay: -5s; } */
+
+/* Fewer drawings on small screens */
+@media (max-width: 800px) {
+  .drawing:nth-child(n+5) { display: none; }
+}
+
+/* Motion comfort: no drifting for people who asked their device for less motion */
+@media (prefers-reduced-motion: reduce) {
+  .drawing { animation: none; }
+}
